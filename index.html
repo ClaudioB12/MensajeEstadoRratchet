@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<body>
+
+<h2 id="estado">---</h2>
+<button onclick="send(1)">Activar</button>
+<button onclick="send(0)">Desactivar</button>
+
+<script>
+  const ws = new WebSocket('ws://localhost:8080')
+
+  ws.onmessage = e => {
+    const d = JSON.parse(e.data)
+    document.getElementById('estado').textContent =
+      d.estado ? 'ACTIVO' : 'INACTIVO'
+  }
+
+  const send = e =>
+    ws.send(JSON.stringify({ estado: e }))
+</script>
+
+</body>
+</html>
